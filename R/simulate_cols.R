@@ -154,7 +154,8 @@ prepare_expression <- function(expr) {
     return(expr)
   }
 
-  purrr::modify(expr, prepare_expression)
+  expr[] <- lapply(expr, prepare_expression)
+  expr
 }
 
 extract_col_expression <- function(col_def, schema) {
@@ -242,6 +243,7 @@ get_col_params <- function(col_def, schema, faker_opts) {
 #' @param col_def Column definition.
 #' @param schema Schema object.
 #' @param faker_opts Column simulation faker_opts.
+#' @keywords internal
 fake_column <- function(n, col_def, schema, faker_opts) {
   if (is_deterministic(col_def, schema)) {
     # Col deterministic, no other rules can be applied

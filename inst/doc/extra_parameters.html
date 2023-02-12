@@ -12,7 +12,7 @@
 
 <meta name="author" content="Krystian Igras" />
 
-<meta name="date" content="2021-09-23" />
+<meta name="date" content="2023-02-10" />
 
 <title>Extra parameters</title>
 
@@ -26,6 +26,7 @@
   div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   ul.task-list{list-style: none;}
     </style>
+
 
 
 <style type="text/css">
@@ -141,7 +142,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <h1 class="title toc-ignore">Extra parameters</h1>
 <h4 class="author">Krystian Igras</h4>
-<h4 class="date">2021-09-23</h4>
+<h4 class="date">2023-02-10</h4>
 
 
 
@@ -190,7 +191,7 @@ public:
 <p>Now we’d like to extend the definition following the below rules:</p>
 <ol style="list-style-type: decimal">
 <li>For each <code>patient_id</code> we usually want to have more than one row (it allows us to analyze the patient in multiple treatment stages).</li>
-<li>For each <code>patient_id</code>, <code>lineid</code> is the sequence starting from 1 to the number of patient rows.</li>
+<li>For each <code>patient_id</code>, <code>line_number</code> is the sequence starting from 1 to the number of patient rows.</li>
 <li><code>gender</code> should be unique for each <code>patient_id</code> value.</li>
 <li><code>biomarker</code> value should <code>mean = 0.5</code> for females and <code>mean = 0.6</code> for males.</li>
 </ol>
@@ -236,7 +237,7 @@ public:
 </div>
 <div id="rule-no-2" class="section level4">
 <h4>Rule no 2</h4>
-<p>Now, we’d like to make sure <code>line_id</code> is a sequence <code>1:n</code>, where <code>n</code> is the number of rows for each patient.</p>
+<p>Now, we’d like to make sure <code>line_number</code> is a sequence <code>1:n</code>, where <code>n</code> is the number of rows for each patient.</p>
 <p>If we define <code>line_number</code> formula as <code>!expr 1:dplyr::n()</code>, the resulting column would be a sequence <code>1:n</code> where <code>n</code> is the number of table rows. There is an obvious need to apply grouping by <code>patient_id</code>.</p>
 <p>How can we achieve this in DataFakeR?</p>
 <p>It is enough to add <code>group_by: patient_id</code> parameter to <code>line_number</code>.</p>
@@ -340,16 +341,16 @@ public:
 <span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 10 × 5</span></span>
 <span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    treatment_id patient_id line_number gender biomarker</span></span>
 <span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;        &lt;chr&gt;            &lt;int&gt; &lt;chr&gt;      &lt;dbl&gt;</span></span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 PTNT01ID1    PTNT01ID             1 M        0.716  </span></span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2 PTNT02ID1    PTNT02ID             1 M        0.595  </span></span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3 PTNT02ID2    PTNT02ID             2 M        0.0432 </span></span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4 PTNT01ID2    PTNT01ID             2 M        0.449  </span></span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5 PTNT01ID3    PTNT01ID             3 M        0.639  </span></span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6 PTNT02ID3    PTNT02ID             3 M        0.801  </span></span>
-<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7 PTNT02ID4    PTNT02ID             4 M        0.542  </span></span>
-<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8 PTNT02ID5    PTNT02ID             5 M        0.882  </span></span>
-<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9 PTNT03ID1    PTNT03ID             1 M        0.00679</span></span>
-<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 PTNT01ID4    PTNT01ID             4 M        0.447</span></span></code></pre></div>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 PTNT01ID1    PTNT01ID             1 F         0.732 </span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2 PTNT02ID1    PTNT02ID             1 F         0.973 </span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3 PTNT02ID2    PTNT02ID             2 F         0.311 </span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4 PTNT01ID2    PTNT01ID             2 F         0.716 </span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5 PTNT01ID3    PTNT01ID             3 F         0.595 </span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6 PTNT02ID3    PTNT02ID             3 F         0.0432</span></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7 PTNT02ID4    PTNT02ID             4 F         0.449 </span></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8 PTNT02ID5    PTNT02ID             5 F         0.639 </span></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9 PTNT03ID1    PTNT03ID             1 M         0.801 </span></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 PTNT01ID4    PTNT01ID             4 F         0.542</span></span></code></pre></div>
 <p>Voila!</p>
 </div>
 <div id="rule-no-4" class="section level4">
